@@ -5,8 +5,35 @@
 #include <stdint.h>
 
 #define MAX_DIGIT_LEN 10
+
+/*
+ * @brief is_Palindriome function responsible for checking whether the
+ * input value is a palindrome or not.
+ *
+ * @params[in]: num - store the input value,
+ *
+ * @returns true - Success/ false - Failue.
+ *
+ */
 bool is_Palindriome(int num);
 
+/*********** MAIN FUNCTION DEFINATION ***********/
+int main(char **argv, char* argc)
+{
+    int num = 0;
+    bool result = false;
+
+    printf("Enter No: ");
+    scanf("%d", &num);
+
+    result = is_Palindriome(num);
+    
+    (result == true) ? printf("\n%d is a Palindrome\n",num) : printf("\n%d is not a Palindrome\n",num);
+
+	return 0;
+}
+
+/*********** LOCAL FUNCTION DEFINATION ***********/
 bool is_Palindriome(int num)
 {
   int temp = num;
@@ -38,19 +65,4 @@ bool is_Palindriome(int num)
   }
 
   return rc;
-}
-
-int main(char **argv, char* argc)
-{
-    int num = 0;
-    bool result = false;
-
-    printf("Enter No: ");
-    scanf("%d", &num);
-
-    result = is_Palindriome(num);
-    
-    (result == true) ? printf("\n%d is a Palindrome\n",num) : printf("\n%d is not a Palindrome\n",num);
-
-	return 0;
 }
