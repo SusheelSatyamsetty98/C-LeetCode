@@ -8,14 +8,14 @@
  * two indexes are summing upto the targeted value.
  *
  * @params[in]: *a - stores the input data.
- *              len - length of the input data.
+ *              numsSize - numsSizegth of the input data.
  *              target - specify the target value.
  * @params[out]: *b - stores the indexes of that accumilating to the target value.
  *
  * @return k > 0 in Success/ 0 in failure.
  *
  */
-int twoSum(int *a, int len, int target, int *b);
+int twoSum(int *a, int numsSize, int target, int *b);
 
 /*********** MAIN FUNCTION DEFINATION ***********/
 int main(int argc, char **argv[])
@@ -36,9 +36,10 @@ int main(int argc, char **argv[])
     scanf("%d", &a[i]);
   }
 
-  int *b = (int *)malloc(len);
-  int size = twoSum(a, len, target, b);
-  if (size > 0)
+  int *b = (int *)malloc(2 * sizeof(int));
+  int size = 0;
+  b = twoSum(a, len, target, &size);
+  if ((size > 0) && (b != NULL))
   {
   	for (int i = 0; i < size; i += 2)
   	{
@@ -55,21 +56,22 @@ int main(int argc, char **argv[])
 }
 
 /*********** LOCAL FUNCTION DEFINATION ***********/
-int twoSum(int *a, int len, int target, int *b)
+int *twoSum(int *nums, int numsSize, int target, int *returnSize)
 {
-  int k = 0;
-  for (int i = 0; i <= len - 1; i++)
+  int * list = NULL;
+  for (int i = 0; i <= numsSize - 1; i++)
   {
-    for (int j = i + 1; j <= len; j++)
+    for (int j = i + 1; j < numsSize; j++)
     {
-      if ((a[i] + a[j]) == target)
+      if ((nums[i] + nums[j]) == target)
       {
-        b[k++] = i;
-        b[k] = j;
-        k++;
+        list = (int*)malloc(2 * sizeof(int));
+        list[0] = i;
+        list[1] = j;
+		    *returnSize = 2;
+        return list;
       }
     }
   }
-
-  return k;
+  return list;
 }
