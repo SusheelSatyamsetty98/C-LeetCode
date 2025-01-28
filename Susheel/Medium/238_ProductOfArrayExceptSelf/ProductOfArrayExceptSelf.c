@@ -2,46 +2,75 @@
 #include <stdlib.h>
 #include <string.h>
 
-int *h = NULL;
-
-void ProductOfArrayExceptSelf(int no_of_elements, int* result)
+int* ProductOfArrayExceptSelf(int *nums, int numsSize, int *returnsSize)
 {
-    for(int i = 0; i < no_of_elements; i++)
-    {
-        int prod = 1;
-        for(int j = 0; j < no_of_elements; j++)
-        {
-            if(i == j)
-                continue;
+    int *result = (int*)malloc(numsSize * sizeof(int));
+    int *zeroidxList = NULL;
+    int zeroidxCount = 0;
+    int prod = 1;
 
-            prod *= h[j];
+    for(int i = 0; i < numsSize; i++)
+    {
+        if(nums[i] != 0)
+        {
+            prod *= nums[i];
         }
-        result[i] = prod;
+        else
+        {
+            if(zeroidxList == NULL)
+            {
+                zeroidxList = (int*)malloc(2 * sizeof(int));
+            }
+
+            zeroidxList[zeroidxCount++] = i;
+            
+            if(zeroidxCount == 2)
+            {
+                memset(result,0, numsSize * sizeof(int));
+                *returnSize = numsSize;
+                return result;
+            }
+
+            prod *= 1;
+        }
     }
+
+    if ((zeroidxList != NULL) && (zeroidxCount == 1))
+    {
+        memset(result,0, numsSize * sizeof(int));
+        result[zeroidxList[0]] = prod;
+    }
+    else
+    {
+        for(int i = 0; i < numsSize ; i++)
+        {
+            result[i] = prod / nums[i];
+        }
+    }
+
+    *returnSize = numsSize;
+    return result;
 }
 
 int main()
 {
-    int no_of_elements = 0;
+    int numsSize = 0;
     int *result = NULL;
+    int returnsSize = 0;
 
     printf("Total No of Elements you want to create");
-    scanf("%d", &no_of_elements);
+    scanf("%d", &numsSize);
 
-    h = (int*)malloc(no_of_elements);
+    int* nums = (int*)malloc(numsSize);
 
-    for (int i = 0; i < no_of_elements; i++)
-        scanf("%d", &h[i]);
+    for (int i = 0; i < numsSize; i++)
+        scanf("%d", &nums[i]);
 
-    result = (int*)malloc(no_of_elements);
-    memset(result,1,no_of_elements);
+    result = ProductOfArrayExceptSelf(nums, numsSize, &returnsSize);
 
-    ProductOfArrayExceptSelf(no_of_elements, result);
+    for(int i = 0; i < returnsSize; i++)
+        printf("%d ", result[i]);
 
-    for(int i = 0; i < no_of_elements; i++)
-        printf("%d - ", result[i]);
-
-    free(h);
     free(result);
 
     return 0;
