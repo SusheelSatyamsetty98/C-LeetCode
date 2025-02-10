@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool containDuplicate(vector<int> &num)
+bool MissingNumber(vector<int> &num)
 {
     bool res = false;
     set<int> a;
@@ -34,7 +34,7 @@ int main() {
         a.push_back(val);
     }
     
-    res = containDuplicate(a);
+    res = MissingNumber(a);
     
     cout << "res : " << res << endl;
 
