@@ -92,7 +92,7 @@ int main()
 
 	bool res = validAnagram(s, t);
 
-	printf("Is Duplicate(0-False/1-True): %d\n", res);
+	printf("Is Valid Anagram(0-False/1-True): %d\n", res);
 	
 	return 0;
 }

@@ -1,5 +1,5 @@
 all: clean
-	$(CC) -g -o LongestCommonPrefix LongestCommonPrefix.c
+	$(CC) -g -o ValidPalindrome ValidPalindrome.c
 
 clean:
-	rm -rf LongestCommonPrefix
+	rm -rf ValidPalindrome
