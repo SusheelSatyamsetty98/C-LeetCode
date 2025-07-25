@@ -1,3 +1,4 @@
+// Online C++ compiler to run C++ program online
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -44,11 +45,59 @@ void createLinkedlist(int noe,Linkedlist *&head)
   }
 }
 
+void helperFn(Linkedlist *&temp, queue<Linkedlist*> &q)
+{
+    if(q.empty())
+        return;
+
+    if(temp->next != nullptr)
+    {
+        q.push(temp->next);
+    }
+    else
+    {
+        temp->next = q.front();
+        q.pop();
+        return;
+    }
+    
+    temp->next = q.front();
+    q.pop();
+    temp = temp->next;
+    
+    if(!q.empty())
+        helperFn(temp,q);
+    
+    return;
+}
+
+Linkedlist *mergeLinkedlistRecu(Linkedlist *&head, Linkedlist *&head2)
+{
+    Linkedlist *merge = nullptr;
+    Linkedlist *temp = nullptr;
+    
+    queue<Linkedlist*> q;
+    
+    if(head != nullptr) q.push(head);
+    if (head2 != nullptr) q.push(head2);
+    
+    if(merge == nullptr)
+    {
+        merge = temp = q.front();
+        q.pop();
+    }
+    
+    if(!q.empty())
+    {
+        helperFn(temp, q);
+    }
+    return merge;
+}
+
 Linkedlist *mergeLinkedlist(Linkedlist *&head, Linkedlist *&head2)
 {
     Linkedlist *merge = nullptr;
     Linkedlist *temp = nullptr;
-    // Linkedlist *var = nullptr;
     
     queue<Linkedlist*> q;
     
@@ -66,9 +115,13 @@ Linkedlist *mergeLinkedlist(Linkedlist *&head, Linkedlist *&head2)
         
         if(temp->next != nullptr)
         {
-            cout << "here"  << temp->a << " " << temp->next << endl;
-            // q.emplace(temp->next);
             q.push(temp->next);
+        }
+        else
+        {
+            temp->next = q.front();
+            q.pop();
+            return merge;
         }
         
         temp->next = q.front();
@@ -104,6 +157,13 @@ int main()
   Linkedlist *res = mergeLinkedlist(head, head2);
   
     cout << "Merge Linked List : " << endl;
+  printLinkedlist(no_of_element + no_of_element2, res);
+  cout << endl;
+
+  
+  res = mergeLinkedlistRecu(head, head2);
+  
+    cout << "Merge Recursive Linked List : " << endl;
   printLinkedlist(no_of_element + no_of_element2, res);
   cout << endl;
 
