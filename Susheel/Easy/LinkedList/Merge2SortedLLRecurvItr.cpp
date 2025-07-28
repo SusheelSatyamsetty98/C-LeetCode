@@ -45,90 +45,92 @@ void createLinkedlist(int noe,Linkedlist *&head)
   }
 }
 
-void helperFn(Linkedlist *&temp, queue<Linkedlist*> &q)
-{
-    if(q.empty())
-        return;
+// void helperFn(Linkedlist *&temp, queue<Linkedlist*> &q)
+// {
+//     if(q.empty())
+//         return;
 
-    if(temp->next != nullptr)
-    {
-        q.push(temp->next);
-    }
-    else
-    {
-        temp->next = q.front();
-        q.pop();
-        return;
-    }
+//     if(temp->next != nullptr)
+//     {
+//         q.push(temp->next);
+//     }
+//     else
+//     {
+//         temp->next = q.front();
+//         q.pop();
+//         return;
+//     }
     
-    temp->next = q.front();
-    q.pop();
-    temp = temp->next;
+//     temp->next = q.front();
+//     q.pop();
+//     temp = temp->next;
     
-    if(!q.empty())
-        helperFn(temp,q);
+//     if(!q.empty())
+//         helperFn(temp,q);
     
-    return;
-}
+//     return;
+// }
 
-Linkedlist *mergeLinkedlistRecu(Linkedlist *&head, Linkedlist *&head2)
-{
-    Linkedlist *merge = nullptr;
-    Linkedlist *temp = nullptr;
+// Linkedlist *mergeLinkedlistRecu(Linkedlist *&head, Linkedlist *&head2)
+// {
+//     Linkedlist *merge = nullptr;
+//     Linkedlist *temp = nullptr;
     
-    queue<Linkedlist*> q;
+//     queue<Linkedlist*> q;
     
-    if(head != nullptr) q.push(head);
-    if (head2 != nullptr) q.push(head2);
+//     if(head != nullptr) q.push(head);
+//     if (head2 != nullptr) q.push(head2);
     
-    if(merge == nullptr)
-    {
-        merge = temp = q.front();
-        q.pop();
-    }
+//     if(merge == nullptr)
+//     {
+//         merge = temp = q.front();
+//         q.pop();
+//     }
     
-    if(!q.empty())
-    {
-        helperFn(temp, q);
-    }
-    return merge;
-}
+//     if(!q.empty())
+//     {
+//         helperFn(temp, q);
+//     }
+//     return merge;
+// }
 
-Linkedlist *mergeLinkedlist(Linkedlist *&head, Linkedlist *&head2)
+/* NOTE: Traverse the merge list temp in all cases except at merge == nullptr */
+Linkedlist *mergeLinkedlist(Linkedlist *list1, Linkedlist *list2)
 {
-    Linkedlist *merge = nullptr;
-    Linkedlist *temp = nullptr;
-    
-    queue<Linkedlist*> q;
-    
-    if(head != nullptr) q.push(head);
-    if (head2 != nullptr) q.push(head2);
-    
-    if(merge == nullptr)
-    {
-        merge = temp = q.front();
-        q.pop();
-    }
-    
-    while(!q.empty())
-    {
-        
-        if(temp->next != nullptr)
-        {
-            q.push(temp->next);
-        }
-        else
-        {
-            temp->next = q.front();
-            q.pop();
-            return merge;
-        }
-        
-        temp->next = q.front();
-        q.pop();
-        temp = temp->next;
-    }
-    return merge;
+      if(!list1 || !list2) return list1 ? list1 : list2;
+  
+      Linkedlist *temp2 = list2;
+      Linkedlist *temp1 = list1;
+      Linkedlist *merge = nullptr;
+      Linkedlist *temp = nullptr;
+  
+      while(temp1 && temp2)
+      {
+          if(temp1->val < temp2->val)
+          {
+              if(merge == nullptr)
+                  merge = temp = temp1;
+              else {
+                  temp->next = temp1;
+                  temp = temp->next;
+              }
+              temp1 = temp1->next;
+          }
+          else
+          {
+              if(merge == nullptr)
+                  merge = temp = temp2;
+              else {
+                  temp->next = temp2;
+                  temp = temp->next;
+              }
+              temp2 = temp2->next;
+          }
+      }
+      
+      temp->next = temp1 ? temp1 : temp2;
+      
+      return merge;
 }
 
 int main()
@@ -161,11 +163,11 @@ int main()
   cout << endl;
 
   
-  res = mergeLinkedlistRecu(head, head2);
+  // res = mergeLinkedlistRecu(head, head2);
   
-    cout << "Merge Recursive Linked List : " << endl;
-  printLinkedlist(no_of_element + no_of_element2, res);
-  cout << endl;
+  //   cout << "Merge Recursive Linked List : " << endl;
+  // printLinkedlist(no_of_element + no_of_element2, res);
+  // cout << endl;
 
   return 0;
 }
