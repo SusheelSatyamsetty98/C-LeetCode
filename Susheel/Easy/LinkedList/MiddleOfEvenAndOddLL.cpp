@@ -12,7 +12,8 @@ struct Linkedlist{
   Linkedlist(int x, Linkedlist *nxt) : a(x),next(nxt) {}
 };
 
-/* IMPORTANT NOTE: START THE Fast Pointer with head->next Instead of head */
+/* IMPORTANT NOTE: START THE Fast Pointer with head->next Instead of head
+If there are two middle nodes, return the second middle node. -> Then run the fast pointer from head only. */
 
 void printLinkedlist(int noe, Linkedlist *n)
 {
